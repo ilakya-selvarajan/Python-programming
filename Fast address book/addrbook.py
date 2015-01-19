@@ -8,7 +8,7 @@ class Person:
         return self.first_name+" "+self.last_name
 
 
-#this is a class
+
 
 class AddressBook:
 
@@ -29,21 +29,25 @@ class AddressBook:
             raise ValueError("No such person")
         assert len(result)>0, result
         return result
-        
+
+
+
 class FAddressBook(AddressBook):
     
     def __init__(self):
         AddressBook.__init__(self)
-       # print "Hi, I'm FAddressBook init"
+    # creating two dictionaries with 'key' as first name and 'value' as list of person with the same first name
         self.by_last_name={} #{last_name:[Person(),...]}
         self.by_first_name={} #{first_name:[Person()...]}
 
+    #returns the address of the instance by last name
     def lookup_last_name(self, last_name):
         try:
             return self.by_last_name[last_name]
         except KeyError:
             return None
 
+    #returns the address of the instance by first name
     def lookup_first_name(self, first_name):
         try:
             return self.by_first_name[first_name]
@@ -51,15 +55,19 @@ class FAddressBook(AddressBook):
             return None
 
     def add(self, person):
+        #In the dictionaries created before if first 'and' last name present as key then this name already exists
         if person.last_name in self.by_last_name and person.first_name in self.by_first_name:
                 print "Name already exists"
         else:
+            #if key already present add person to the existing list
             try:
                 (self.by_last_name[person.last_name]).append(person)
                 print person.first_name,person.last_name, "added"
+            #if key not found, create a new key value pair
             except KeyError:
                 self.by_last_name[person.last_name] = [person]
                 print person.first_name,person.last_name, "added"
+            #the same using first name
             try:
                 (self.by_first_name[person.first_name]).append(person)
                 #print person.first_name,person.last_name, "added"
@@ -68,6 +76,7 @@ class FAddressBook(AddressBook):
                 #print person.first_name,person.last_name, "added"
 
     def remove(self, person):
+        #If key found in dictionary, then find the index of the person from the list and delete it
         if person.last_name in self.by_last_name:
             list1=self.by_last_name[person.last_name]
             for c in list1:
