@@ -1,5 +1,3 @@
-#This one we started on Tuesday 20.1.
-
 from __future__ import division
 import random
 #alternatives:
