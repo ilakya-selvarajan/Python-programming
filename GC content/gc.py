@@ -14,6 +14,23 @@ import random
 ## generate a random sequence of length 5, which has no a's and on
 ## average about half c's, quarter g's, quarter t's. The probabilities
 ## of course sum up to 1, so you can assume this in your solution.
+
+#Random nucleotide generator with given probability
+def rnd_seq_prob(l,seq,choices):
+   total = sum(prob for nucleotide, prob in choices)   #total=1.0 because the prob sum up to 1
+   r = random.uniform(0, total)                         #generating a number between 0 and 1
+   cutoff = 0
+   for nucleotide, prob in choices:
+      if cutoff + prob > r:                                   
+         return nucleotide
+      cutoff += prob
+
+def getseq(length, choices):
+    outstring = ""
+    for i in range(length):
+        outstring += rnd_seq_prob(length, s, choices)       
+    return outstring
+    
 ##
 ## TASK 2:
 ##
@@ -45,24 +62,44 @@ def rnd_seq(l,alphabet):
 ## to balance the GC content and the length. Be creative in how you approach that. Some possible
 ## directions were shown on the lecture.
 
-def max_gc_area(seq,w):
-    """Finds the subsequence of seq of length w which has the highest GC content.
-    In case there are several subsequences with the same GC content, returns the first one"""
-    max_gc=None
-    max_i=None
-    for i in range(len(seq)-w+1):
-        sub_seq=seq[i:i+w]
-        gc=(sub_seq.count("g")+sub_seq.count("c"))/w
-        if max_gc is None or gc>max_gc:
-            max_gc=gc
-            max_i=i
-    assert max_gc is not None
-    return max_i
+def max_gc_area(seq):
+    length = len(seq)
+    list1 = []
+    dict2={}
+    for i in xrange(length):
+        for j in xrange(i,length):
+            list1.append(seq[i:j + 1]) 
+    alist=list(set(list1))                      #generate all possible combination of the string
+    for string in alist:
+        score = ((string.count('g')+string.count('c'))**2) / len(string)  #Set a score for each substring
+        gc_cont = (string.count('g')+string.count('c'))/len(string)        #calculate the GC% 
+        dict2[string] = (score, gc_cont)
+        #dict2[string]=(string.count('g')+string.count('c')),(string.count('g')+string.count('c'))/len(string)  #score,GC%
+    list2=sorted(dict2.items(), key=lambda x: x[1])                     #substrings sorted based on score
+    
+    return list2[-1][0],list2[-1][1][0],list2[-1][1][1]                 #returning the substring with highest score and GC%
 
-
-
-
+sample_size = 10   #it comes close to the given probability when the sample size increases
+seq_length=5
+choice = [('a', 0.0), ('c', 0.5), ('g', 0.25), ('t', 0.25)]
+prob_dict = {}
 s=rnd_seq(20,"acgt")+"cccca"
-print s
-print max_gc_area(s,4)
+print "\n\n","Randomly generated sequence:",s,"\n\n"
+sub_string_highGC=max_gc_area(s)
+for sample in range(sample_size):
+    str = getseq(seq_length, choice)
+    #print(str)
+    for char in str:
+        try:
+            prob_dict[char] += 1
+        except KeyError:
+            prob_dict[char] = 0
 
+print "One example of randlomly generated string with weightage:",str,"\n\n"
+print "Nucleotide probabilities of", sample_size, "generated sequences"
+
+for key in prob_dict:
+    print("Nucleotide : %s , Prob: %f" % (key, prob_dict[key]/(sample_size*seq_length)) )
+print "\n\n"
+
+print "The substring with highest GC content balanced with its length",sub_string_highGC[0],"with score of",sub_string_highGC[1],"and GC%:",sub_string_highGC[2]
