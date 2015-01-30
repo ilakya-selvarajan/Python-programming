@@ -42,6 +42,29 @@ def getseq(length, choices):
 ## such that every a is followed by a or c with 50:50 chance, but a c is very unlikely
 ## to be followed by another c.
 
+def rnd_seq_matrix(l,alphabet,M):
+    #total = sum(prob for nucleotide, prob in choices)   #total=1.0 because the prob sum up to 1
+   outstring2=''
+   current_letter = random.choice(alphabet)
+   current_index = alphabet.index(current_letter)
+   outstring2+=current_letter
+   r1 = random.uniform(0, 1)                         #generating a number between 0 and 1
+   cutoff=0
+   
+   #power_matrix = zip(alphabet,M)
+   for i in range(0,l-1):
+        for prob in M[current_index]:
+            r2 = random.uniform(0, 1)
+            if cutoff + prob > r2:  
+                
+                current_index=M[current_index].index(prob)
+                outstring2+=alphabet[M[current_index].index(prob)]
+                break
+            cutoff += prob
+   return outstring2
+        
+            
+  
 def rnd_seq(l,alphabet):
     """Generates a random sequence of length l drawn from alphabet"""
     #One-liner version:
@@ -51,6 +74,7 @@ def rnd_seq(l,alphabet):
     for i in range(l):
         seq+=random.choice(alphabet)
     return seq
+    #pass
 
 ## TASK 3:
 ##
@@ -80,9 +104,14 @@ def max_gc_area(seq):
 sample_size = 10   #it comes close to the given probability when the sample size increases
 seq_length=5
 choice = [('a', 0.0), ('c', 0.5), ('g', 0.25), ('t', 0.25)]
+choice2 = [[0.5,0.0,0.25,0.25],[0.0,0.25,0.5,0.25],[0.25,0.25,0.5,0.0],[0.25,0.5,0.0,0.25]]
+
 prob_dict = {}
 s=rnd_seq(20,"acgt")+"cccca"
 print "\n\n","Randomly generated sequence:",s,"\n\n"
+
+matrix_seq = rnd_seq_matrix(seq_length,'acgt',choice2)
+
 sub_string_highGC=max_gc_area(s)
 for sample in range(sample_size):
     str = getseq(seq_length, choice)
@@ -93,11 +122,12 @@ for sample in range(sample_size):
         except KeyError:
             prob_dict[char] = 0
 
-print "One example of randlomly generated string with weightage:",str,"\n\n"
+print "Task1:",str,"(One example from the 10 generated sequences)\n\n"
 print "Nucleotide probabilities of", sample_size, "generated sequences"
 
 for key in prob_dict:
     print("Nucleotide : %s , Prob: %f" % (key, prob_dict[key]/(sample_size*seq_length)) )
 print "\n\n"
-
-print "The substring with highest GC content balanced with its length",sub_string_highGC[0],"with score of",sub_string_highGC[1],"and GC%:",sub_string_highGC[2]
+print "Task 2:",matrix_seq,"(generated with the prob. matrix)"
+print "\n\nTask 3:(GC content of the substring with highest CG%)\n"
+print "The substring with highest GC content balanced with its length",sub_string_highGC[0],"with score of",sub_string_highGC[1],"and GC%:",sub_string_highGC[2],"\n\n"
