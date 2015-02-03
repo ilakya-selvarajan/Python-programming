@@ -37,20 +37,28 @@ def rp(seq,min_len,max_len):
          
  
 def pretty_print(seq,hits):
-    star=['']*len(seq)
-    print seq
-    #for i in range(hits:
-    #star.insert(8:18,'*')
-    print ' '.join(star)
-    print hits
- 
+    star=['-']*len(seq)
+    print len(star)
+    for first_list in hits:
+        #star.insert(first_list[0],'*'*first_list[1])
+        first_item=first_list[0]
+        second_item=(first_list[0]+first_list[1])-1
+        star[first_item:second_item]='*'*second_item
+        #print first_item,second_item
+    
+    
+    
+    print ''.join(star)
+    print len(star),len(seq)
+    
+    #print index()
 substrings=[]
-my_seq = Seq("TCCTCTCTCTACCTAGGTCCCCACCTAGGTCCC", IUPAC.unambiguous_dna)
+my_seq = Seq("TATCGCGATAAACCTAGGTTTCCTCTCTCTACCTAGGTCCCCACCTAGGTCCCACCTAGGTTCCCCGGGGA", IUPAC.unambiguous_dna)
 hits= rp(my_seq,8,10)
 pretty_print(my_seq,hits)    
     
     
-    
+#string1   TCCTCTCTCTACCTAGGTCCCCACCTAGGTCCC    
 #string2 for testing:  TATCGCGATAAACCTAGGTTTCCTCTCTCTACCTAGGTCCCCACCTAGGTCCCACCTAGGTTCCCCGGGGA    
 
 
