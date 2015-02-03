@@ -51,7 +51,7 @@ pretty_print(my_seq,hits)
     
     
     
-    
+#string2 for testing:  TATCGCGATAAACCTAGGTTTCCTCTCTCTACCTAGGTCCCCACCTAGGTCCCACCTAGGTTCCCCGGGGA    
 
 
 
