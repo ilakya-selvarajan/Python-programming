@@ -52,7 +52,7 @@ def pretty_print(seq,hits):
     
     
 substrings=[]
-my_seq = Seq("TCCTCTCTCTACCTAGGTCCCCACCTAGGTCCC", IUPAC.unambiguous_dna)
+my_seq = Seq("ACCTAGGTTCCTCTCTCTACCTAGGTCCCCACCTAGGTCCC", IUPAC.unambiguous_dna)
 hits= rp(my_seq,8,10)
 pretty_print(my_seq,hits)    
     
