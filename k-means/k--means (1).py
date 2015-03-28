@@ -46,7 +46,7 @@ for fst in f1:
 dict22={}  
 dict23={}    
 kcluster = kcluster(f3,nclusters=7,method='a',dist='e')
-#print kcluster
+print kcluster[0]
 list11=kcluster[0]
 for i in range (0,len(list11)):
     dict22[names[i]]=list11[i]
