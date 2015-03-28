@@ -1,0 +1,4 @@
+('-1', 'Escherichia coli')
+('1', 'Homo sapiens')
+('-1', 'Escherichia coli')
+('1', 'Homo sapiens')
