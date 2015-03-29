@@ -19,9 +19,9 @@ def tonewick(node,tree,words):
                 if i1==i2+1 or i1==i2-1:
                     if i2+1==i1:
                         #print (words[i1],words[i2]),i1+1
-                        tuple1=(i1,i2)
-                        list2.append(list(tuple1))
-                        list3.append(i1+1)
+                        tuple1=(words[i1],words[i2])
+                        list2.append(tuple1)
+                        list3.append(words[i1+1])
                         clusterids.remove(i1)
                         clusterids.remove(i2)
            if i1>=0 and i2>=0: 
@@ -29,15 +29,15 @@ def tonewick(node,tree,words):
                     if i2+1==i1:
                         #print (words[i1],words[i2]),i1+1
                     #print (words[i1],words[i2]),(i1,i2)
-                        tuple1=(i1,i2)
-                        list2.append(list(tuple1))
-                        list3.append(i1+1)
+                        tuple1=(words[i1],words[i2])
+                        list2.append(tuple1)
+                        list3.append(words[i1+1])
                         clusterids.remove(i1)
                         clusterids.remove(i2)
              
     
     #print order2
-    return list2,list3,clusterids
+    return list2,list3
 clusterids = range(-21, 22)
 f1=[]
 names=[]
@@ -86,51 +86,7 @@ for keys,values in dict22.iteritems():
 data2=treecluster(data=f3, mask=None, weight=None, transpose=0, dist='e', method='a', distancematrix=None)
 data2.scale()
 
-final,number_final,clusterids=tonewick(-21,data2,names)
-za=zip(final,number_final)
-print final
-numbers_final=list(set(number_final) & set(clusterids))
-#print numbers_final
-final_list=[]
+final,number_final=tonewick(-21,data2,names)
+print tuple(zip(final,number_final))
 
-print number_final
-for tu in final:
-    for i in range(0,len(numbers_final)):
-        if tu[0]+1==numbers_final[i]:
-            #print tu[0]+1
-            final_list.append(numbers_final[i])
-a_list=[]        
-print "final",final_list
-print numbers_final
-j=0
-for i in number_final:
-    #print i
-    
-    if i==final_list[j]:
-        print i,final_list[j],"equal"
-        
-        #a_list.append(i)
-        
-    if i!=final_list[j]:
-        #j=j+1
-        print i,final_list[j],"notequal"
-        final_list.insert(j,"")
-    j=j+1    
-print "lalalala",   numbers_final 
-print final_list
-print number_final    
-for i in range(0,len(final_list)):
-    if final_list[i]!="":
-        final_list[i]=names[final_list[i]]
-#print len(final),len(numbers_final), len(number_final)  
-
-for list in final:
-    list[0]=names[list[0]]
-    list[1]=names[list[1]]
-for list in final:
-    list=tuple(list)    
-#print final
-i_final=zip(tuple(final),tuple(final_list))   
-print i_final
- 
- 
+#print tuple1
