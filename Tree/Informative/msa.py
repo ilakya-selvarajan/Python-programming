@@ -1,9 +1,8 @@
 #Program to retrieve Informative sites
-#example input from http://bip.weizmann.ac.il/education/course/introbioinfo/03/lect12/phylogenetics.pdf
 from Bio import AlignIO
 import numpy
 holder=open("seq1.fasta","r")
-print "For checking the output, please see PNG file 'example_used'"
+
 list1=[]
 matrix=[]
 list2=[]

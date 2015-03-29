@@ -19,9 +19,9 @@ def tonewick(node,tree,words):
                 if i1==i2+1 or i1==i2-1:
                     if i2+1==i1:
                         #print (words[i1],words[i2]),i1+1
-                        tuple1=(words[i1],words[i2])
+                        tuple1=(i1,i2)
                         list2.append(tuple1)
-                        list3.append(words[i1+1])
+                        list3.append(i1+1)
                         clusterids.remove(i1)
                         clusterids.remove(i2)
            if i1>=0 and i2>=0: 
@@ -29,15 +29,15 @@ def tonewick(node,tree,words):
                     if i2+1==i1:
                         #print (words[i1],words[i2]),i1+1
                     #print (words[i1],words[i2]),(i1,i2)
-                        tuple1=(words[i1],words[i2])
+                        tuple1=(i1,i2)
                         list2.append(tuple1)
-                        list3.append(words[i1+1])
+                        list3.append(i1+1)
                         clusterids.remove(i1)
                         clusterids.remove(i2)
              
     
     #print order2
-    return list2,list3
+    return list2,list3,clusterids
 clusterids = range(-21, 22)
 f1=[]
 names=[]
@@ -86,7 +86,36 @@ for keys,values in dict22.iteritems():
 data2=treecluster(data=f3, mask=None, weight=None, transpose=0, dist='e', method='a', distancematrix=None)
 data2.scale()
 
-final,number_final=tonewick(-21,data2,names)
-print zip(final,number_final)
+final,number_final,clusterids=tonewick(-21,data2,names)
+za=zip(final,number_final)
+#print number_final
+numbers_final=list(set(number_final) & set(clusterids))
+#print numbers_final
+final_list=[]
+#print final
 
-#print tuple1
+for tu in final:
+    for i in range(0,len(numbers_final)):
+        if tu[0]+1==numbers_final[i]:
+            #print tu[0]+1
+            final_list.append(numbers_final[i])
+        
+#print final_list
+#print zip(final[0],final_list[0])
+j=0
+for i in number_final:
+    
+    if i==numbers_final[j]:
+        j=j+1
+        #print i,numbers_final[j]
+        
+    else:
+        numbers_final.insert(j, 100)
+        j=j+1
+        #print i,numbers_final[j]
+i_final=zip(final,tuple(numbers_final))   
+for na in i_final:
+    if na[0][0][0]!=100:
+        na1[0][0][0]=(names[na[0][0][0]])
+ 
+ 
